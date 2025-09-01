@@ -6,7 +6,7 @@
 /*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:18 by merilhan          #+#    #+#             */
-/*   Updated: 2025/08/30 04:23:19 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 04:35:50 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_status(t_philo *philo, char *color, char *status)
 
 static void	take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 0 && philo->id != philo->data->num_philos)
 	{
 		pthread_mutex_lock(philo->right_fork);
 		print_status(philo, YELLOW, "has taken a fork");
@@ -88,6 +88,7 @@ void	*philosopher_routine(void *arg)
 		print_status(philo, BLUE, "is sleeping");
 		ft_usleep(philo->data->time_to_sleep);
 		print_status(philo, CYAN, "is thinking");
+		ft_usleep(philo->data->time_to_think);
 	}
 	return (NULL);
 }

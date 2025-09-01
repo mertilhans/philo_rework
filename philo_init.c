@@ -6,7 +6,7 @@
 /*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:13 by merilhan          #+#    #+#             */
-/*   Updated: 2025/08/30 04:23:14 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 05:03:32 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,39 @@ static long	ft_atol(const char *str)
 	return (nbr);
 }
 
+void	set_think_time(t_data *data)
+{
+	int		think_time;
+	bool	philo_even;
+
+	think_time = 0;
+	philo_even = (data->num_philos % 2) == 0;
+	if (philo_even && data->time_to_eat <= data->time_to_sleep)
+		return ;
+	else if (philo_even && data->time_to_eat > data->time_to_sleep)
+		think_time = data->time_to_eat - data->time_to_sleep;
+	else if (!philo_even && data->time_to_eat == data->time_to_sleep)
+		think_time = data->time_to_eat;
+	else if (!philo_even && data->time_to_eat > data->time_to_sleep)
+		think_time = (data->time_to_eat * 2) - data->time_to_sleep;
+	else if (!philo_even && data->time_to_eat < data->time_to_sleep)
+		think_time = (data->time_to_eat * 2) - data->time_to_sleep;
+	if (think_time < 0)
+		think_time = 0;
+	data->time_to_think = think_time;
+}
+
 static int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	data->num_philos = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	set_think_time(data);
+	if (data->time_to_eat > data->time_to_sleep)
+		data->time_to_think = (data->time_to_eat - data->time_to_sleep) / 2;
+	else
+		data->time_to_think = 0;
 	data->num_meals_to_eat = -1;
 	if (argc == 6)
 	{
@@ -60,16 +87,8 @@ static int	init_philo_and_fork(t_data *data, int i)
 	data->philos[i].id = i + 1;
 	data->philos[i].meals_eaten = 0;
 	data->philos[i].data = data;
-	if (data->philos[i].id % 2 == 0)
-	{
-		data->philos[i].left_fork = &data->forks[(i + 1) % data->num_philos];
-		data->philos[i].right_fork = &data->forks[i];
-	}
-	else
-	{
-		data->philos[i].left_fork = &data->forks[i];
-		data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philos];
-	}
+	data->philos[i].left_fork = &data->forks[i];
+	data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philos];
 	return (0);
 }
 
@@ -100,10 +119,10 @@ int	validate_init(int argc, char **argv, t_data *data)
 		return (print_error("Error: Wrong arguments."));
 	if (parse_arguments(argc, argv, data))
 		return (1);
-	if (data->time_to_eat > data->time_to_sleep)
-		data->time_to_think = (data->time_to_eat - data->time_to_sleep) / 2;
-	else
-		data->time_to_think = 0;
+	// if (data->time_to_eat > data->time_to_sleep)
+	// 	data->time_to_think = (data->time_to_eat - data->time_to_sleep) / 2;
+	// else
+	// 	data->time_to_think = 0;
 	data->simulation_should_end = 0;
 	if (init_resources(data))
 	{

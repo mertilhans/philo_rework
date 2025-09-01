@@ -6,7 +6,7 @@
 /*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:37 by merilhan          #+#    #+#             */
-/*   Updated: 2025/08/30 04:29:04 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 04:36:06 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,22 @@
 # define BLUE "\033[1;34m"
 # define CYAN "\033[1;36m"
 
-typedef struct s_data	t_data;
+typedef struct s_data
+{
+	int					num_philos;
+	uint64_t			time_to_die;
+	uint64_t			time_to_eat;
+	uint64_t			time_to_sleep;
+	uint64_t			time_to_think;
+	int					num_meals_to_eat;
+	uint64_t			start_time;
+	int					simulation_should_end;
+	struct s_philo		*philos;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		write_mutex;
+	pthread_mutex_t		death_check_mutex;
+	pthread_mutex_t		start_mutex;
+}						t_data;
 
 typedef struct s_philo
 {
@@ -37,23 +52,6 @@ typedef struct s_philo
 	pthread_mutex_t		*right_fork;
 	t_data				*data;
 }						t_philo;
-
-typedef struct s_data
-{
-	int					num_philos;
-	uint64_t			time_to_die;
-	uint64_t			time_to_eat;
-	uint64_t			time_to_sleep;
-	uint64_t			time_to_think;
-	int					num_meals_to_eat;
-	uint64_t			start_time;
-	int					simulation_should_end;
-	t_philo				*philos;
-	pthread_mutex_t		*forks;
-	pthread_mutex_t		write_mutex;
-	pthread_mutex_t		death_check_mutex;
-	pthread_mutex_t		start_mutex;
-}						t_data;
 
 int						validate_init(int argc, char **argv, t_data *data);
 void					*philosopher_routine(void *arg);
