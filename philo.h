@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
+/*   By: merilhan <merilhan@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:37 by merilhan          #+#    #+#             */
-/*   Updated: 2025/09/01 04:36:06 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 22:35:32 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <stdbool.h>
 # include <stdint.h>
-# include <stdio.h>
 
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
@@ -39,6 +37,7 @@ typedef struct s_data
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		write_mutex;
 	pthread_mutex_t		death_check_mutex;
+	pthread_mutex_t		eat_mutex;
 	pthread_mutex_t		start_mutex;
 }						t_data;
 
@@ -64,5 +63,6 @@ uint64_t				get_time(void);
 void					ft_usleep(uint64_t time);
 void					clean_sim(t_data *data);
 int						print_error(char *message);
-
+void					set_think_time(t_data *data);
+long					ft_atol(const char *str);
 #endif

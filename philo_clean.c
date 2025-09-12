@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_clean.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
+/*   By: merilhan <merilhan@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:09 by merilhan          #+#    #+#             */
-/*   Updated: 2025/08/30 04:25:50 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:10:48 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

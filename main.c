@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
+/*   By: merilhan <merilhan@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:06 by merilhan          #+#    #+#             */
-/*   Updated: 2025/08/30 04:28:20 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 22:59:09 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <string.h>
 
 int	begin_sim(t_data *data)
 {
@@ -44,6 +45,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 	int		ret;
 
+	memset(&data, 0, sizeof(t_data));
 	if (validate_init(argc, argv, &data))
 		return (1);
 	init_data_address(&data);

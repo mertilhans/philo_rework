@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   philo_monitor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merilhan <merilhan@42kocaeli.com.tr>       +#+  +:+       +#+        */
+/*   By: merilhan <merilhan@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 04:23:15 by merilhan          #+#    #+#             */
-/*   Updated: 2025/09/01 04:34:56 by merilhan         ###   ########.fr       */
+/*   Updated: 2025/09/01 20:58:28 by merilhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <unistd.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+void	print_status(t_philo *philo, char *color, char *status)
+{
+	uint64_t	time;
+
+	pthread_mutex_lock(&philo->data->write_mutex);
+	if (!get_simulation_end_flag())
+	{
+		time = get_time() - philo->data->start_time;
+		printf("%s%lu %d %s%s\n", color, time, philo->id, status, RESET);
+	}
+	pthread_mutex_unlock(&philo->data->write_mutex);
+}
 
 static bool	check_a_philo(t_philo *philo)
 {
@@ -75,7 +90,6 @@ void	*monitor_death(void *arg)
 		}
 		if (check_all_philos_full(data))
 			return (NULL);
-		usleep(1000);
 	}
 	return (NULL);
 }
